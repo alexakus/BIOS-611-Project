@@ -1,27 +1,40 @@
-all:spotify_dataset_clean.csv
+# Define files and dependencies
+CLEANED_DATA = data/spotify_dataset_clean.csv
+ANALYZED_DATA = data/spotify_playlist_word_freq.csv
+RESULTS_DATA = figures/song_trends.png figures/anger.png figures/anticipation.png \
+               figures/disgust.png figures/fear.png figures/joy.png figures/sadness.png \
+               figures/surprise.png figures/trust.png figures/pop.png figures/edm.png \
+               figures/country.png figures/rap.png figures/jazz.png figures/indie.png \
+               figures/holiday_playlist.png
+REPORT_RMD = report.Rmd
+REPORT_PDF = report.pdf
 
-OUTPUT_FILE = data/spotify_dataset_clean.csv
+# Default target
+all: $(REPORT_PDF)
 
-#Clean original dataset
-data/spotify_dataset_clean.csv: /home/rstudio/work/data/spotify_dataset.csv
-	Rscript clean.R data/spotify_dataset_clean.csv /home/rstudio/work/data/spotify_dataset.csv
+# Run clean.R
+$(CLEANED_DATA): clean.R
+	Rscript clean.R
 
-report.Rmd:spotify_dataset_clean.csv
+# Run analyze.R
+$(ANALYZED_DATA): analyze.R $(CLEANED_DATA)
+	Rscript analyze.R
 
-#Turn report.Rmd into the final PDF format
-report.pdf: report.Rmd
-	R -e "rmarkdown::render(\"report.Rmd\", output_format=\"pdf_document\")"
+# Run results.R
+$(RESULTS_DATA): results.R $(ANALYZED_DATA)
+	Rscript results.R
 
-clean:
-	rm -f data/spotify_dataset_clean.csv
+# Render report.pdf
+$(REPORT_PDF): $(REPORT_RMD)
+	Rscript -e "rmarkdown::render('$<', output_format = 'pdf_document')"
 
+# Individual targets
+clean: $(CLEANED_DATA)
+analyze: $(ANALYZED_DATA)
+results: $(RESULTS_DATA)
+report: $(REPORT_PDF)
 
-
-
-
-
-#TEMPORARY NOTES
-#report.pdf: deps...
-#	R -r "rmarkdown::render(\"report.Rmd\", output_format=\"pdf_document\")"
-#report.pdf: deps...
-#	R -r "tinytex.pdflatex(\"report.tex\")"
+# Clean up intermediate and output files
+.PHONY: clean_all
+clean_all:
+	rm -f $(CLEANED_DATA) $(ANALYZED_DATA) $(RESULTS_DATA) $(REPORT_RMD) $(REPORT_PDF)

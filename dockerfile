@@ -1,25 +1,37 @@
-# Use the Rocker image with R and RStudio
+# Start with a base R image with RStudio
 FROM rocker/verse
 
-RUN R -e "install.packages(\"matlab\")"
-RUN apt update && DEBIAN_FRONTEND=noninteractive apt install -y python3-pip
-RUN pip3 install tensorflow
+# Install required system tools
+RUN apt-get update && apt-get install -y make
+RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \
+    apt-get update && apt-get install -y ./google-chrome-stable_current_amd64.deb && \
+    rm google-chrome-stable_current_amd64.deb
 
-# Install any additional R packages you need
-RUN R -e "install.packages(c('ggplot2', 'dplyr', 'tidyr', 'readr'), repos='https://cloud.r-project.org/')"
+# Install TinyTeX and R packages
+RUN R -e "install.packages(c('tinytex', 'stringi', 'tidyverse', 'tidytext', 'glue', 'textdata', 'gt', 'webshot2'), repos='https://cloud.r-project.org/')"
+RUN R -e "tinytex::install_tinytex(force = TRUE)"
 
-# Set the working directory inside the container
+# Run the libraries (CAUSES ISSUES)
+#RUN echo "library(tinytex)" >> /home/rstudio/.Rprofile
+#RUN echo "library(stringi)" >> /home/rstudio/.Rprofile
+#RUN echo "library(tidyverse)" >> /home/rstudio/.Rprofile
+#RUN echo "library(tidytext)" >> /home/rstudio/.Rprofile
+#RUN echo "library(glue)" >> /home/rstudio/.Rprofile
+#RUN echo "library(textdata)" >> /home/rstudio/.Rprofile
+#RUN echo "library(gt)" >> /home/rstudio/.Rprofile
+#RUN echo "library(webshot2)" >> /home/rstudio/.Rprofile
+
+# Set working directory and expose RStudio port
+WORKDIR /home/rstudio
+EXPOSE 8787
+
+# Default command
+CMD ["/init"]
+# Set the working directory
 WORKDIR /home/rstudio
 
-# Expose ports for RStudio and Shiny (if needed)
+# Expose the RStudio port
 EXPOSE 8787
-EXPOSE 3838
 
-# Copy any local files to the container (if needed)
-# COPY ./your-local-directory /home/rstudio/your-directory
-
-# Set up user permissions (optional, depending on your needs)
-RUN chown -R rstudio:rstudio /home/rstudio
-
-# Start RStudio Server (this is default in rocker/verse)
+# Default command to run
 CMD ["/init"]

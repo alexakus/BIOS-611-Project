@@ -1,0 +1,52 @@
+---
+title: "Spotify Playlist Report"
+author: "Alex Akushevich"
+output: pdf_document
+---
+## Intro
+The Spotify playlist dataset contains roughly 12 million songs grouped together by the playlist they were placed into. The playlists are named by users so we'll take a look at what kind of trends we can find in these playlist names.
+
+## Results Summary
+
+It appears people aren't very creative with their playlist names. A lot of playlists are named after genres. Figures 1 through 7 take a look at what songs come up most frequently in playlists containing a genre name like "pop", "rock", etc.
+
+Then we'll dive a little deeper. We can use the tidytext package to match sentimental associations to the words people use to name their playlists. Figures 8 through 15 show the songs that come up most for each sentiment.
+
+People also tend to put years into their playlist names. Figure 16 takes a look at a few songs that seemed to pop up a lot of year-themed playlists and how their popularity changed over time.
+
+Finally, in spirit of Winter Break, Figure 17 throws together a holiday playlist based on songs that often appear in playlists with jolly terms.
+
+
+![Top pop songs: songs appearing most often in playlists containing the word "pop"](./figures/pop.png)
+
+![Top rock songs: songs appearing most often in playlists containing the word "rock"](./figures/rock.png)
+
+![Top EDM songs: songs appearing most often in playlists containing the word "EDM"](./figures/edm.png)
+
+![Top country songs: songs appearing most often in playlists containing the word "country"](./figures/country.png)
+
+![Top rap songs: songs appearing most often in playlists containing the word "rap"](./figures/rap.png)
+
+![Top jazz songs: songs appearing most often in playlists containing the word "jazz"](./figures/jazz.png)
+
+![Top indie songs: songs appearing most often in playlists containing the word "indie"](./figures/indie.png)
+
+![Angry songs: songs appearing most often in playlists containing words associated with anger](./figures/anger.png)
+
+![Anticipation songs: songs appearing most often in playlists containing words associated with anticipation](./figures/anticipation.png)
+
+![Disgust songs: songs appearing most often in playlists containing words associated with disgust](./figures/disgust.png)
+
+![Fear songs: songs appearing most often in playlists containing words associated with fear](./figures/fear.png)
+
+![Joy songs: songs appearing most often in playlists containing words associated with joy](./figures/joy.png)
+
+![Sadness songs: songs appearing most often in playlists containing words associated with sadness](./figures/sadness.png)
+
+![Surprise songs: songs appearing most often in playlists containing words associated with surprise](./figures/surprise.png)
+
+![Trust songs: songs appearing most often in playlists containing words associated with trust](./figures/trust.png)
+
+![Annual trends: songs that appeared in playlists themed after at least 6 different years, and how their popularity changed over time](./figures/song_trends.png)
+
+![Holiday Playlist: songs in playlists associated with the holiday season](./figures/holiday_playlist.png)

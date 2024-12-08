@@ -2,10 +2,10 @@ library("tidyverse")
 library("glue")
 library("stringi")
 
-path <- "data/"
+path <- "data"
 
 #import raw lines to remove mismatched quotes (e.g., [12" version])
-raw_data <- tibble(readLines(file.path(path,"spotify_dataset.csv")))
+raw_data <- as_tibble(readLines(file.path(path,"spotify_dataset.csv")))
 
 colnames(raw_data) <- c("line")
 
@@ -72,6 +72,23 @@ cleaned_data <- spotify_dataset_raw %>%
 removed_data <- anti_join(spotify_dataset_raw, cleaned_data, by = c("user_id", "artist", "track", "playlist"))
 
 message(glue("{nrow(removed_data)} observations with generic (e.g., Intro) song titles and generic/default playlist names (e.g., Starred, Liked from radio, etc.) removed"))
+
+spotify_dataset_raw <- cleaned_data
+rm(cleaned_data)
+rm(removed_data)
+
+#remove playlists named after the artist
+cleaned_data <- spotify_dataset_raw %>%
+  filter(
+    !str_detect(
+      toupper(playlist),
+      str_c("\\b", str_replace_all(toupper(artist), "([\\+\\.\\^\\$\\*\\?\\(\\)\\[\\]\\{\\}\\|\\\\])", "\\\\\\1"), "\\b")
+    )  # Only check the playlist for matches with the artist's name
+  )
+
+removed_data <- anti_join(spotify_dataset_raw, cleaned_data, by = c("user_id", "artist", "track", "playlist"))
+
+message(glue("{nrow(removed_data)} observations with playlist named after the artist removed"))
 
 spotify_dataset_raw <- cleaned_data
 rm(cleaned_data)
