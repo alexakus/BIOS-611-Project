@@ -40,43 +40,50 @@ pop <- spotify_playlist_word_freq %>%
   filter(word=="POP") %>%
   select(-word) %>%
   arrange(desc(appearances)) %>%
-  head(n=10)
+  head(n=10) %>%
+  rename_with(~ str_to_title(.))
 
 rock <- spotify_playlist_word_freq %>%
   filter(word=="ROCK") %>%
   select(-word) %>%
   arrange(desc(appearances)) %>%
-  head(n=10)
+  head(n=10) %>%
+  rename_with(~ str_to_title(.))
 
 edm <- spotify_playlist_word_freq %>%
   filter(word=="EDM") %>%
   select(-word) %>%
   arrange(desc(appearances)) %>%
-  head(n=10)
+  head(n=10) %>%
+  rename_with(~ str_to_title(.))
 
 country <- spotify_playlist_word_freq %>%
   filter(word=="COUNTRY") %>%
   select(-word) %>%
   arrange(desc(appearances)) %>%
-  head(n=10)
+  head(n=10) %>%
+  rename_with(~ str_to_title(.))
 
 rap <- spotify_playlist_word_freq %>%
   filter(word=="RAP") %>%
   select(-word) %>%
   arrange(desc(appearances)) %>%
-  head(n=10)
+  head(n=10) %>%
+  rename_with(~ str_to_title(.))
 
 jazz <- spotify_playlist_word_freq %>%
   filter(word=="JAZZ") %>%
   select(-word) %>%
   arrange(desc(appearances)) %>%
-  head(n=10)
+  head(n=10) %>%
+  rename_with(~ str_to_title(.))
 
 indie <- spotify_playlist_word_freq %>%
   filter(word=="INDIE") %>%
   select(-word) %>%
   arrange(desc(appearances)) %>%
-  head(n=10)
+  head(n=10) %>%
+  rename_with(~ str_to_title(.))
 
 #sentiment breakdown
 spotify_playlist_sentiment_count <- spotify_playlist_sentiment %>%
@@ -86,14 +93,14 @@ spotify_playlist_sentiment_count <- spotify_playlist_sentiment %>%
   count() %>%
   arrange(desc(n))
 
-anger <- spotify_playlist_sentiment_count %>% filter(sentiment=="ANGER") %>% head(n=10) %>% ungroup() %>% select(-sentiment)
-anticipation <- spotify_playlist_sentiment_count %>% filter(sentiment=="ANTICIPATION") %>% head(n=10) %>% ungroup() %>% select(-sentiment)
-disgust <- spotify_playlist_sentiment_count %>% filter(sentiment=="DISGUST") %>% head(n=10) %>% ungroup() %>% select(-sentiment)
-fear <- spotify_playlist_sentiment_count %>% filter(sentiment=="FEAR") %>% head(n=10) %>% ungroup() %>% select(-sentiment)
-joy <- spotify_playlist_sentiment_count %>% filter(sentiment=="JOY") %>% head(n=10) %>% ungroup() %>% select(-sentiment)
-sadness <- spotify_playlist_sentiment_count %>% filter(sentiment=="SADNESS") %>% head(n=10) %>% ungroup() %>% select(-sentiment)
-surprise <- spotify_playlist_sentiment_count %>% filter(sentiment=="SURPRISE") %>% head(n=10) %>% ungroup() %>% select(-sentiment)
-trust <- spotify_playlist_sentiment_count %>% filter(sentiment=="TRUST") %>% head(n=10) %>% ungroup() %>% select(-sentiment)
+anger <- spotify_playlist_sentiment_count %>% filter(sentiment=="ANGER") %>% head(n=10) %>% ungroup() %>% select(-sentiment) %>% rename_with(~ str_to_title(.))
+anticipation <- spotify_playlist_sentiment_count %>% filter(sentiment=="ANTICIPATION") %>% head(n=10) %>% ungroup() %>% select(-sentiment) %>% rename_with(~ str_to_title(.))
+disgust <- spotify_playlist_sentiment_count %>% filter(sentiment=="DISGUST") %>% head(n=10) %>% ungroup() %>% select(-sentiment) %>% rename_with(~ str_to_title(.))
+fear <- spotify_playlist_sentiment_count %>% filter(sentiment=="FEAR") %>% head(n=10) %>% ungroup() %>% select(-sentiment) %>% rename_with(~ str_to_title(.))
+joy <- spotify_playlist_sentiment_count %>% filter(sentiment=="JOY") %>% head(n=10) %>% ungroup() %>% select(-sentiment) %>% rename_with(~ str_to_title(.))
+sadness <- spotify_playlist_sentiment_count %>% filter(sentiment=="SADNESS") %>% head(n=10) %>% ungroup() %>% select(-sentiment) %>% rename_with(~ str_to_title(.))
+surprise <- spotify_playlist_sentiment_count %>% filter(sentiment=="SURPRISE") %>% head(n=10) %>% ungroup() %>% select(-sentiment) %>% rename_with(~ str_to_title(.))
+trust <- spotify_playlist_sentiment_count %>% filter(sentiment=="TRUST") %>% head(n=10) %>% ungroup() %>% select(-sentiment) %>% rename_with(~ str_to_title(.))
 
 #people seem to really like naming their playlists after years
 #let's see trends in songs over years
@@ -148,7 +155,8 @@ holiday_playlist <- spotify_playlist_word_freq %>%
   group_by(artist, track) %>%                       # Group by the new category
   summarize(appearances = sum(appearances), .groups = "drop") %>%  # Sum up appearances
   arrange(desc(appearances)) %>%
-  head(n=10)
+  head(n=10) %>%
+  rename_with(~ str_to_title(.))
 
 
 if (!dir.exists(figures_path)) {

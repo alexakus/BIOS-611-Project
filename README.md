@@ -8,7 +8,7 @@ You can download the Spotify playlist dataset on Kaggle (link below). Name the d
 https://www.kaggle.com/datasets/ashwinik/spotify-playlist/data
 ```
 
-To run this code, first navigate to the project directory and build the docker container like this:
+To run this code, first navigate to the project directory and build the docker container by typing the following into a shell terminal:
 
 ```
 docker build . -t rstudio
@@ -22,7 +22,8 @@ docker run -e PASSWORD=mypassword -v "$(pwd):/home/rstudio/work" -p 8787:8787 --
 
 And visit http://localhost:8787 in your browser. Log in with user 'rstudio' and password 'mypassword'.
 
-We'll need to accept an agreement to download a tinytext dataset. Navigate to the console and type
+We'll need to accept an agreement to download a tinytext dataset. Navigate to the console and type:
+Note: manually running the library since automatically doing so causes issues.
 
 ```
 library(tidytext)
@@ -30,7 +31,7 @@ get_sentiments("nrc")
 1
 ```
 
-To build the final report, visit the terminal in RStudio and type
+To build the final report, visit the terminal in RStudio and type:
 
 ```
 cd work

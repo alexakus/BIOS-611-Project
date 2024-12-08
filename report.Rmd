@@ -4,15 +4,15 @@ author: "Alex Akushevich"
 output: pdf_document
 ---
 ## Intro
-The Spotify playlist dataset contains roughly 12 million songs grouped together by the playlist they were placed into. The playlists are named by users so we'll take a look at what kind of trends we can find in these playlist names.
+The Spotify playlist dataset contains roughly 12 million songs grouped together by the playlists they're added to. The playlists are named by users so we'll take a look at what kind of trends we can find in playlist names.
 
 ## Results Summary
 
 It appears people aren't very creative with their playlist names. A lot of playlists are named after genres. Figures 1 through 7 take a look at what songs come up most frequently in playlists containing a genre name like "pop", "rock", etc.
 
-Then we'll dive a little deeper. We can use the tidytext package to match sentimental associations to the words people use to name their playlists. Figures 8 through 15 show the songs that come up most for each sentiment.
+Then we'll dive a little deeper by using the tidytext package to match sentimental associations to the words used to name playlists. Figures 8 through 15 show the songs that come up most for each emotion.
 
-People also tend to put years into their playlist names. Figure 16 takes a look at a few songs that seemed to pop up a lot of year-themed playlists and how their popularity changed over time.
+People also tend to put years into their playlist names. Figure 16 takes a look at a few songs that popped up in a lot of year-themed playlists and how their popularity changed over time.
 
 Finally, in spirit of Winter Break, Figure 17 throws together a holiday playlist based on songs that often appear in playlists with jolly terms.
 
